@@ -7,9 +7,9 @@
 
 #include "../Board/Board.h"
 
-void Print_Board_to_Console();
+void Print_Board_to_Console(Board *board);
 
-int Input_parser(int row,int con);
+int Input_parser(Board *board ,int row,int con);
 
 
 

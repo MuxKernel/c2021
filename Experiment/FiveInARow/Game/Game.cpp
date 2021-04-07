@@ -3,3 +3,9 @@
 //
 
 #include "Game.h"
+#include <vector>
+
+float AI_put_piece(Board *board){
+    vector<Point> *possible_points = find_possible_solutions(board);
+
+}
