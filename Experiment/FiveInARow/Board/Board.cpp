@@ -44,7 +44,7 @@ Board::Board(int current, char *name) {
 int Board::put_piece(int row, int con) {
     // 当前操作者从board中读取
     int current_chess = this->m_current_player;
-    if (this->m_current_player == system){ // 如果本该是玩家操作的回合变成AI操作
+    if (this->m_current_player == system) { // 如果本该是玩家操作的回合变成AI操作
         return 0; // 异常
     }
     this->m_map[row][con].key = this->player_chess[current_chess]; // 在地图上记录下棋
@@ -53,6 +53,8 @@ int Board::put_piece(int row, int con) {
     this->m_current_player = 1 - this->m_current_player; // 切换现在下棋的人
     return 1; // 成功
 }
+
+Board::Board() = default;
 
 
 

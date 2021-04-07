@@ -28,15 +28,16 @@ typedef struct {// 棋盘上的一个点
 
 class Board {
 public: // 公共变量定义
-    char *m_name; // 玩家姓名 unused
-    Point m_map[16][16]; // 地图数组指针 二维数组 大小：15*15 会多出来一行一列的数据
-    int m_current_player; // 记录现在是谁在操作
-    int player_chess[2]; // 记录每个玩家的棋子是啥
+    char *m_name{}; // 玩家姓名 unused
+    Point m_map[16][16]{}; // 地图数组指针 二维数组 大小：15*15 会多出来一行一列的数据
+    int m_current_player{}; // 记录现在是谁在操作
+    int player_chess[2]{}; // 记录每个玩家的棋子是啥
     vector<Point> m_user_operations; // 记录用户操作的向量 <[row,con]>
     vector<Point> m_sys_operations;  // 记录系统操作的向量 <[row,con]>
-    int Current_Zobrist; // 记录现在的Zobrist值
+    int Current_Zobrist{}; // 记录现在的Zobrist值
 public: // 公共方法声明
     Board(int current, char *name = nullptr); // 构造方法
+    Board(); // 空构造方法
     /**
      * 下棋操作 成功1 失败0
      * @param row

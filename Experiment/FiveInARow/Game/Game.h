@@ -53,5 +53,23 @@ int victory(Board *board);
  */
 float AI_put_piece(Board *board);
 
+/**
+ * 模拟下棋操作 不记录到操作表中，使用复制的棋盘
+ * @param board
+ * @param row
+ * @param con
+ * @return
+ */
+int AI_put_piece_stimulatly(Board *board, int row, int con);
+
+/**
+ * 模拟下棋操作 不记录到操作表中，使用复制的棋盘
+ * @param board
+ * @param row
+ * @param con
+ * @return
+ */
+int AI_put_piece_stimulatly(Board *board, Point point);
+
 
 #endif //FIVEINAROW_GAME_H
