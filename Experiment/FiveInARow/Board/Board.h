@@ -40,7 +40,7 @@ public: // 公共方法声明
      * @param player
      * @return
      */
-    int put_piece(int row, int con, int player);
+    int put_piece(Board *board,int row, int con);
     //TODO:悔棋
 };
 

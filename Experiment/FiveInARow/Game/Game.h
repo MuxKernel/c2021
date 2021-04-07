@@ -35,5 +35,18 @@ int score_of_a_point(Board *board,Point point);
  */
 Point find_best_point(Board *board);
 
+/**
+ * 检查此时是否有一方已经胜利
+ * -1否 0 user 1 sys
+ * @param board
+ * @return
+ */
+int victory(Board *board);
 
+/**
+ * Ai下棋 返回这步棋的胜率
+ * @param board
+ * @return
+ */
+float AI_put_piece(Board *board);
 #endif //FIVEINAROW_GAME_H

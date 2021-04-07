@@ -32,9 +32,10 @@ Board::Board(int current, char *name) {
     this->Current_Zobrist = RanGen.IRandom(0, RANDOM_MAX);
 }
 
-
-
-int Board::put_piece(int row, int con, int player) {
+int Board::put_piece(Board *board,int row, int con) {
+    // 当前操作者从board中读取
     return 0;
 }
+
+
 
