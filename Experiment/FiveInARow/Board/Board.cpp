@@ -13,10 +13,10 @@ Board::Board(int current, char *name) {
 //    this->m_map = map; 暂时不支持下残局
     this->m_current_player = current;
     // 记录每个玩家拿的是什么棋
-    if(current == system){// 黑棋先
+    if (current == system) {// 黑棋先
         this->player_chess[user] = black;
         this->player_chess[system] = white;
-    }else{
+    } else {
         this->player_chess[user] = white;
         this->player_chess[system] = black;
     }
@@ -52,6 +52,79 @@ int Board::put_piece(int row, int con) {
     this->m_user_operations.push_back(m_map[row][con]); // 记录操作
     this->m_current_player = 1 - this->m_current_player; // 切换现在下棋的人
     return 1; // 成功
+}
+
+Point *Board::point_on_a_direction(Point point, int direction) {
+    int row = point.row;
+    int con = point.con;
+    switch (direction) {
+        case up:
+            if (point.row <= 1) {
+                return nullptr; // 上越界
+            }
+            row++;
+            return &this->m_map[row][con];
+        case up_right:
+            if (point.row <= 1) {
+                return nullptr; // 上越界
+            }
+            if (point.con >= 15) {
+                return nullptr; // 右越界
+            }
+            con++;
+            row++;
+            &this->m_map[row][con];
+        case right:
+            if (point.con >= 15) {
+                return nullptr; // 右越界
+            }
+            con++;
+            &this->m_map[row][con];
+        case right_down:
+            if (point.row >= 15) {
+                return nullptr; // 下越界
+            }
+            if (point.con >= 15) {
+                return nullptr; // 右越界
+            }
+            con++;
+            row--;
+            &this->m_map[row][con];
+        case down:
+            if (point.row >= 15) {
+                return nullptr; // 下越界
+            }
+            row--;
+            &this->m_map[row][con];
+        case down_left:
+            if (point.con <= 1) {
+                return nullptr; // 左越界
+            }
+            if (point.row >= 15) {
+                return nullptr; // 下越界
+            }
+            con--;
+            row--;
+            &this->m_map[row][con];
+        case left:
+            if (point.con <= 1) {
+                return nullptr; // 左越界
+            }
+            con--;
+            &this->m_map[row][con];
+        case left_up:
+            if (point.con <= 1) {
+                return nullptr; // 左越界
+            }
+            if (point.row <= 1) {
+                return nullptr; // 上越界
+            }
+            con--;
+            row++;
+            &this->m_map[row][con];
+        default:
+            return nullptr;
+    }
 }
 
 Board::Board() = default;

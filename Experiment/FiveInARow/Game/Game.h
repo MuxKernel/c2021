@@ -62,7 +62,7 @@ float AI_put_piece(Board *board);
  * @param con
  * @return
  */
-int AI_put_piece_stimulatly(Board *board, int row, int con);
+int AI_put_piece_stimulatly(Board board, int row, int con);
 
 /**
  * 模拟下棋操作 不记录到操作表中，使用复制的棋盘
@@ -73,5 +73,10 @@ int AI_put_piece_stimulatly(Board *board, int row, int con);
  */
 int AI_put_piece_stimulatly(Board *board, Point point);
 
+
+int estimate_score_of_board(Board *board);
+
+
+int estimate_score_of_a_point(Board *board, Point point, int direction);
 
 #endif //FIVEINAROW_GAME_H

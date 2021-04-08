@@ -4,7 +4,7 @@
 
 #include "Game.h"
 #include <vector>
-
+#include <cmath>
 #define DEPTH 8
 
 float AI_put_piece(Board *board) {
@@ -22,10 +22,7 @@ int AI_put_piece_stimulatly(Board *board, Point point) {
     board->Current_Zobrist ^= board->m_map[point.row][point.con].chess_Zobrist[current_chess]; // 异或Zobrist值
 }
 
-int score_of_a_point(Board *board, int depth = -1) {
-    if (-1 == depth) { // 第一次调用
-        depth = DEPTH;
-    }
+int score_of_a_point(Board *board, int depth = DEPTH) {
     vector<Point> *possible_points = find_possible_solutions(board);
     vector<Point>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素
     Board stimulate_board; // 复制一个棋盘用来模拟 使用空构造方法
@@ -40,10 +37,50 @@ int score_of_a_point(Board *board, int depth = -1) {
     }
 }
 
-Point find_best_point(Board *board, int player) {
-    if (-1 == depth) { // 第一次调用
-        depth = DEPTH;
+int estimate_score_of_board(Board *board) {
+    // 遍历地图
+    Board stimulate_board = *board; // 复制一个棋盘用来模拟 使用空构造方法
+    Board *p_stimulate_board = &stimulate_board; // 使用指针动态更新棋盘
+    int total_score = 0;
+    int direction_score;
+    for (int row = 1; row < 16; ++row) {
+        for (int con = 1; con < 16; ++con) {
+            if (!stimulate_board.m_map[row][con].key) { // 如果有棋
+                for (int direction = up; direction <= right_down; ++direction) { // 转半圈
+                    direction_score = 0;
+                    direction_score += estimate_score_of_a_point(p_stimulate_board, stimulate_board.m_map[row][con],
+                                                                 direction);
+                    direction_score += estimate_score_of_a_point(p_stimulate_board, stimulate_board.m_map[row][con],
+                                                                 -direction); // 反方向再来一次
+                    total_score += pow(direction_score, 10);
+                }
+            }
+        }
     }
+    return total_score;
+}
+
+int estimate_score_of_a_point(Board *board, Point point, int direction) {
+    int score = 1; // 这个点的得分
+    int now_key = point.key;
+    for (int i = 0; i < 5; ++i) {
+        Point *next_point = board->point_on_a_direction(point, direction);
+        if (next_point->key != now_key) { // 如果不能连在一起
+            if (next_point->key != 0) { // 如果是步死棋
+                score--;
+            }
+            break;
+        } else { // 如果能连在一起
+            next_point->key = 0; // 不重复计数 重置为空
+            score++;
+        }
+
+    }
+    return score;
+}
+
+
+Point find_best_point(Board *board, int player) {
     vector<Point> *possible_points = find_possible_solutions(board);
     vector<Point>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素
     Board stimulate_board; // 复制一个棋盘用来模拟 使用空构造方法
