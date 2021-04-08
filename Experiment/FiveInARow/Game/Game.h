@@ -29,14 +29,16 @@ float estimate_winning_possibility_to_system(Board *board);
  * @param point
  * @return
  */
-int score_of_a_point(Board *board, Point point);
+int score_of_a_point(Board *board, int depth);
 
 /**
  * 寻找此时AI赢面最大的地儿
- * @param board
+ * @param board 棋面
+ * @param depth 搜索深度
+ * @param player 这一层是谁下棋
  * @return
  */
-Point find_best_point(Board *board);
+Point find_best_point(Board *board, int player, int depth);
 
 /**
  * 检查此时是否有一方已经胜利
