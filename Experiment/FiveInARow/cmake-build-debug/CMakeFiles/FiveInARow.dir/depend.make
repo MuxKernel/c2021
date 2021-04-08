@@ -3,7 +3,6 @@
 
 CMakeFiles/FiveInARow.dir/Board/Board.cpp.obj: ../Board/Board.cpp
 CMakeFiles/FiveInARow.dir/Board/Board.cpp.obj: ../Board/Board.h
-CMakeFiles/FiveInARow.dir/Board/Board.cpp.obj: ../randomc/randomc.h
 
 CMakeFiles/FiveInARow.dir/Game/Game.cpp.obj: ../Board/Board.h
 CMakeFiles/FiveInARow.dir/Game/Game.cpp.obj: ../Game/Game.cpp

@@ -10,8 +10,8 @@
 #define FIVEINAROW_BOARD_H
 using namespace std;
 
-enum Player { // 人0 系统1
-    user, system
+enum Players { // 人0 系统1
+    user = 0, sys
 };
 
 enum chess { // 黑1 白2

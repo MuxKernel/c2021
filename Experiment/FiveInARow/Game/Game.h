@@ -71,7 +71,7 @@ int AI_put_piece_stimulatly(Board board, int row, int con);
  * @param con
  * @return
  */
-int AI_put_piece_stimulatly(Board *board, Point point);
+void AI_put_piece_stimulatly(Board *board, Point point);
 
 
 int estimate_score_of_board(Board *board);
