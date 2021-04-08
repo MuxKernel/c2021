@@ -73,13 +73,13 @@ Point *Board::point_on_a_direction(Point point, int direction) {
             }
             con++;
             row++;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case right:
             if (point.con >= 15) {
                 return nullptr; // 右越界
             }
             con++;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case right_down:
             if (point.row >= 15) {
                 return nullptr; // 下越界
@@ -89,13 +89,13 @@ Point *Board::point_on_a_direction(Point point, int direction) {
             }
             con++;
             row--;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case down:
             if (point.row >= 15) {
                 return nullptr; // 下越界
             }
             row--;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case down_left:
             if (point.con <= 1) {
                 return nullptr; // 左越界
@@ -105,13 +105,13 @@ Point *Board::point_on_a_direction(Point point, int direction) {
             }
             con--;
             row--;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case left:
             if (point.con <= 1) {
                 return nullptr; // 左越界
             }
             con--;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         case left_up:
             if (point.con <= 1) {
                 return nullptr; // 左越界
@@ -121,7 +121,7 @@ Point *Board::point_on_a_direction(Point point, int direction) {
             }
             con--;
             row++;
-            &this->m_map[row][con];
+            return &this->m_map[row][con];
         default:
             return nullptr;
     }
