@@ -6,7 +6,7 @@
 
 #include "../Board/Board.h"
 #include <vector>
-#define DEPTH 8
+#define DEPTH 3
 
 /**
  * 寻找可能的可以落子的点，去除明显不需要思考的点 即在这一层可能的落子位置
@@ -14,7 +14,7 @@
  * @param board
  * @return
  */
-vector<Point> *find_possible_solutions(Board *board);
+vector<Point> find_possible_solutions(Board *board);
 
 /**
  * 估计AI胜利概率（全局）
