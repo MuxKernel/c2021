@@ -37,6 +37,7 @@ int main() {
         Print_Board_to_Console(p_board);
         score = estimate_score_of_board(p_board);
         // 输出胜率
-        printf("此时盘面分数为：%d\n", score);
+        printf("score:%d\n", score);
+        p_board->change_current_player();
     } while (1);
 }

@@ -44,8 +44,8 @@ int estimate_score_of_board(Board *board) {
     Board *p_stimulate_board = &stimulate_board; // 使用指针动态更新棋盘
     int total_score = 0;
     int direction_score;
-    for (int row = 1; row < 16; ++row) {
-        for (int con = 1; con < 16; ++con) {
+    for (int row = 5; row < 16; ++row) { // 从第5行/列开始评估 可以扫到整个棋盘
+        for (int con = 5; con < 16; ++con) {
             if (stimulate_board.m_map[row][con].key) { // 如果有棋
                 for (int direction = up; direction <= right_down; ++direction) { // 转半圈
                     direction_score = 0;
@@ -53,12 +53,14 @@ int estimate_score_of_board(Board *board) {
                                                                  direction);
                     direction_score += estimate_score_of_a_point(p_stimulate_board, stimulate_board.m_map[row][con],
                                                                  -direction); // 反方向再来一次
-                    total_score += pow(direction_score, 10);
+                    total_score += (int) pow(10, direction_score);
+
                 }
+                stimulate_board.m_map[row][con].key = 0; // 当前位置也重置为空
             }
         }
     }
-    return total_score;
+    return total_score / 4; // 四个方向
 }
 
 int estimate_score_of_a_point(Board *board, Point point, int direction) {
@@ -77,6 +79,7 @@ int estimate_score_of_a_point(Board *board, Point point, int direction) {
         } else { // 如果能连在一起
             next_point->key = 0; // 不重复计数 重置为空
             score++;
+            point = *next_point; // 以此为基础继续搜索
         }
 
     }

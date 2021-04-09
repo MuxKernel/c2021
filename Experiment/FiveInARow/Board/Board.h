@@ -58,6 +58,8 @@ public: // 公共方法声明
      * @return
      */
     Point *point_on_a_direction(Point point, int direction);
+
+    void change_current_player();
 };
 
 
