@@ -6,7 +6,7 @@
 
 #include "../Board/Board.h"
 #include <vector>
-#define DEPTH 3
+#define DEPTH 2
 
 /**
  * 寻找可能的可以落子的点，去除明显不需要思考的点 即在这一层可能的落子位置

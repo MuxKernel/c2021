@@ -20,6 +20,8 @@ int main() {
         float winning_rate = AI_put_piece(p_board);
         printf("\n");
         Print_Board_to_Console(p_board);
+        printf("\n");
+        Print_sys_operations(p_board);
         // 输出胜率
         printf("AI_winning_rate:%f\n", winning_rate);
     } while (!victory(p_board));

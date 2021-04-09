@@ -7,7 +7,6 @@
 #include <cmath>
 #include <algorithm>
 
-
 float AI_put_piece(Board *board) {
     if (board->m_current_player == user) { // 如果本该是AI操作的回合变成玩家操作
         return 0; // 异常

@@ -11,6 +11,7 @@ void Print_Board_to_Console(Board *board);
 
 int Input_parser(Board *board ,int row,int con);
 
+void Print_sys_operations(Board *board);
 
-
+void Print_user_operations(Board *board);
 #endif //FIVEINAROW_CONSOLE_H
