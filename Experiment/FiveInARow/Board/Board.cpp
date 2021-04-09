@@ -54,6 +54,22 @@ int Board::put_piece(int row, int con) {
     return 1; // 成功
 }
 
+int Board::put_piece(Point point) {
+    // 当前操作者从board中读取
+    // 解包
+    int row = point.row;
+    int con = point.con;
+    int current_chess = this->m_current_player;
+    if (this->m_current_player == sys) { // 如果本该是玩家操作的回合变成AI操作
+        return 0; // 异常
+    }
+    this->m_map[row][con].key = this->player_chess[current_chess]; // 在地图上记录下棋
+    this->Current_Zobrist ^= this->m_map[row][con].chess_Zobrist[current_chess]; // 异或Zobrist值
+    this->m_user_operations.push_back(m_map[row][con]); // 记录操作
+    change_current_player();
+    return 1; // 成功
+}
+
 Point *Board::point_on_a_direction(Point point, int direction) {
     int row = point.row;
     int con = point.con;

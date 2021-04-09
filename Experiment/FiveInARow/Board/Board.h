@@ -50,6 +50,8 @@ public: // 公共方法声明
      * @return
      */
     int put_piece(int row, int con);
+
+    int put_piece(Point point);
     //TODO:悔棋
     /**
      * 注意：返回的是地址值，更改其值会对应棋盘的改变！

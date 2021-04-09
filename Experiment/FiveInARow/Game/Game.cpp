@@ -5,22 +5,27 @@
 #include "Game.h"
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
-#define DEPTH 8
-//
-//float AI_put_piece(Board *board) {
-//    if (board->m_current_player == sys) { // 如果本该是AI操作的回合变成玩家操作
-//        return 0; // 异常
-//    }
-//
-//
-//}
+
+float AI_put_piece(Board *board) {
+    if (board->m_current_player == sys) { // 如果本该是AI操作的回合变成玩家操作
+        return 0; // 异常
+    }
+    Point best_solution_point = find_best_point(board, sys);
+    if (board->put_piece(best_solution_point)) { // 成功放置
+        return estimate_winning_possibility_to_system(board);
+    } else { // 失败
+        return 0.0;
+    }
+}
 
 
 void AI_put_piece_stimulatly(Board *board, Point point) {
     int current_chess = board->m_current_player;
     board->m_map[point.row][point.con].key = board->player_chess[current_chess]; // 在地图上记录下棋
     board->Current_Zobrist ^= board->m_map[point.row][point.con].chess_Zobrist[current_chess]; // 异或Zobrist值
+    board->change_current_player();
 }
 
 //int score_of_a_point(Board *board, int depth = DEPTH) {
@@ -86,17 +91,38 @@ int estimate_score_of_a_point(Board *board, Point point, int direction) {
     return score;
 }
 
-//
-//Point find_best_point(Board *board, int player) {
-//    vector<Point> *possible_points = find_possible_solutions(board);
-//    vector<Point>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素
-//    Board stimulate_board; // 复制一个棋盘用来模拟 使用空构造方法
-//    // 对于每一种可能的下法 （如果第一次进入这个函数，那么这是决策树第一层）
-//    for (it = possible_points->begin(); it != possible_points->end(); it++) {
-//        stimulate_board = *board;
-//        AI_put_piece_stimulatly(board, *it); // 模拟下棋
-//        //TODO:尝试使用递归的方法解决下棋问题
-//
-//    }
-//}
 
+Point find_best_point(Board *board, int depth) {
+    // 留存一份当前玩家是谁 另一份被更改
+    int current_player = board->m_current_player;
+    vector<Point> *possible_points = find_possible_solutions(board);
+    vector<Point>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素
+    Board stimulate_board; // 复制一个棋盘用来模拟 使用空构造方法
+    // 对于每一种可能的下法 （如果第一次进入这个函数，那么这是决策树第一层）
+    vector<int> score_point;
+    for (it = possible_points->begin(); it != possible_points->end(); it++) { // 触发递归
+        stimulate_board = *board; // 复制棋盘
+        AI_put_piece_stimulatly(board, *it); // 模拟下棋
+        //TODO:尝试使用递归的方法解决下棋问题
+        depth--;
+        int score_of_the_point = score_of_a_point(&stimulate_board, depth);
+        score_point.push_back(score_of_the_point);
+    }
+    // max-min
+    if (current_player == sys) {
+        auto biggest = std::max_element(std::begin(score_point), std::end(score_point));
+        //TODO:返回权重值
+//        std::cout << "Max element is " << *biggest<< " at position " << std::distance(std::begin(v), biggest) << std::endl;
+        return possible_points[std::distance(std::begin(score_point), biggest)][0]; // 强制解包 可能会有bug。。
+    } else {
+        auto smallest = std::min_element(std::begin(score_point), std::end(score_point));
+        //TODO:返回权重值
+//        std::cout << "Max element is " << *biggest<< " at position " << std::distance(std::begin(v), biggest) << std::endl;
+        return possible_points[std::distance(std::begin(score_point), smallest)][0]; // 强制解包 可能会有bug。。
+    }
+}
+
+// 分数越大越好
+int score_of_a_point(Board *board, int depth) {
+    // 递归
+}

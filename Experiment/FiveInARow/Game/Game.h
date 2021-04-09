@@ -6,7 +6,7 @@
 
 #include "../Board/Board.h"
 #include <vector>
-
+#define DEPTH 8
 
 /**
  * 寻找可能的可以落子的点，去除明显不需要思考的点 即在这一层可能的落子位置
@@ -38,7 +38,7 @@ int score_of_a_point(Board *board, int depth);
  * @param player 这一层是谁下棋
  * @return
  */
-Point find_best_point(Board *board, int player, int depth);
+Point find_best_point(Board *board, int depth = DEPTH);
 
 /**
  * 检查此时是否有一方已经胜利
